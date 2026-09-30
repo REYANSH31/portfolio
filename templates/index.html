@@ -9,30 +9,29 @@
 <meta name="author" content="{{ data.name }}" />
 <meta name="theme-color" content="#0A0A14" />
 
-<!-- Open Graph -->
+
 <meta property="og:title" content="{{ data.name }} — AI Engineer" />
 <meta property="og:description" content="{{ data.summary[:160] }}" />
 <meta property="og:type" content="website" />
 
-<!-- Favicon -->
+
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%230A0A14%22/><circle cx=%2250%22 cy=%2250%22 r=%2222%22 fill=%22none%22 stroke=%22%237C5CFF%22 stroke-width=%226%22/><circle cx=%2250%22 cy=%2250%22 r=%226%22 fill=%22%2300D9FF%22/></svg>" />
 
-<!-- Fonts -->
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
-<!-- AOS -->
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body class="loading" data-theme="dark">
 
-<!-- ============================= LOADING SCREEN ============================= -->
+
 <div id="loader" aria-hidden="true">
   <div class="loader-inner">
     <svg class="loader-logo" viewBox="0 0 120 120" width="96" height="96">
@@ -52,10 +51,10 @@
   </div>
 </div>
 
-<!-- ============================= CURSOR / PROGRESS ============================= -->
+
 <div class="scroll-progress" id="scrollProgress"></div>
 
-<!-- ============================= NAVBAR ============================= -->
+
 <header class="navbar" id="navbar">
   <div class="navbar-inner">
     <a href="#home" class="nav-logo">R<span>.</span>Sharma</a>
@@ -96,7 +95,7 @@
 
 <main id="top">
 
-  <!-- ============================= HERO ============================= -->
+  
   <section id="home" class="hero">
     <canvas id="heroCanvas" class="hero-canvas"></canvas>
     <div class="hero-vignette"></div>
@@ -105,7 +104,7 @@
       <p class="hero-eyebrow" data-aos="fade-up">— Portfolio / {{ data.location }}</p>
       <h1 class="hero-name" data-aos="fade-up" data-aos-delay="80">{{ data.name }}</h1>
       <h2 class="hero-role">
-        I build <span id="typedRole" class="hero-role-typed"></span>
+        I am a  <span id="typedRole" class="hero-role-typed"></span>
       </h2>
       <p class="hero-desc" data-aos="fade-up" data-aos-delay="160">
         Turning Large Language Models, RAG pipelines and Generative AI into products people actually use.
@@ -129,7 +128,7 @@
     </div>
   </section>
 
-  <!-- ============================= ABOUT ============================= -->
+
   <section id="about" class="section about">
     <div class="container">
       <p class="section-eyebrow" data-aos="fade-up">01 — About</p>
@@ -173,7 +172,7 @@
     </div>
   </section>
 
-  <!-- ============================= SKILLS UNIVERSE ============================= -->
+  
   <section id="skills" class="section skills-universe">
     <div class="container skills-container">
       <p class="section-eyebrow" data-aos="fade-up">02 — Skills</p>
@@ -226,7 +225,7 @@
     </div>
   </section>
 
-  <!-- ============================= PROJECTS ============================= -->
+  
   <section id="projects" class="section projects">
     <div class="container">
       <p class="section-eyebrow" data-aos="fade-up">03 — Projects</p>
@@ -353,7 +352,7 @@
     </div>
   </section>
 
-  <!-- ============================= EXPERIENCE ============================= -->
+
   <section id="experience" class="section experience">
     <div class="container">
       <p class="section-eyebrow" data-aos="fade-up">04 — Experience</p>
@@ -395,7 +394,7 @@
     </div>
   </section>
 
-  <!-- ============================= EDUCATION ============================= -->
+  
   <section id="education" class="section education">
     <div class="container">
       <p class="section-eyebrow" data-aos="fade-up">05 — Education</p>
@@ -416,7 +415,6 @@
     </div>
   </section>
 
-  <!-- ============================= CERTIFICATIONS ============================= -->
   <section id="certifications" class="section certifications">
     <div class="container">
       <p class="section-eyebrow" data-aos="fade-up">06 — Certifications</p>
@@ -478,7 +476,6 @@
     </div>
   </section>
 
-  <!-- ============================= RESUME ============================= -->
   <section id="resume" class="section resume">
     <div class="container">
       <p class="section-eyebrow" data-aos="fade-up">08 — Resume</p>
@@ -499,7 +496,7 @@
     </div>
   </section>
 
-  <!-- ============================= CONTACT ============================= -->
+
   <section id="contact" class="section contact">
     <div class="container">
       <p class="section-eyebrow" data-aos="fade-up">09 — Contact</p>
@@ -583,7 +580,7 @@
   </button>
 </footer>
 
-<!-- ============================= SCRIPTS ============================= -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>

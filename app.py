@@ -1,10 +1,3 @@
-"""
-AI Engineer Portfolio — Flask Backend
-======================================
-Serves the single-page portfolio and exposes a JSON contact endpoint that
-sends mail via SMTP (Gmail App Password or any SMTP provider). All secrets
-are read from environment variables (see .env.example).
-"""
 
 import os
 import re
@@ -21,17 +14,14 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# ----------------------------------------------------------------------------
-# Configuration (all pulled from environment — never hard-code secrets)
-# ----------------------------------------------------------------------------
+
 SMTP_HOST = os.getenv("SMTP_HOST", "smtp.gmail.com")
 SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
 SMTP_USER = os.getenv("SMTP_USER", "")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
 CONTACT_RECEIVER = os.getenv("CONTACT_RECEIVER", SMTP_USER)
 
-# Simple in-memory rate limiter: max 5 submissions / hour / IP.
-# For production, swap this for Redis or a proper rate-limit middleware.
+
 _RATE_LIMIT_WINDOW = 60 * 60
 _RATE_LIMIT_MAX = 5
 _submission_log = defaultdict(list)
@@ -180,9 +170,9 @@ def contact():
     subject = (payload.get("subject") or "").strip()
     message = (payload.get("message") or "").strip()
 
-    # Honeypot field — bots fill hidden inputs, humans never see them.
+   
     if (payload.get("website") or "").strip():
-        return jsonify({"success": True}), 200  # silently swallow bot traffic
+        return jsonify({"success": True}), 200 
 
     errors = {}
     if not name:
@@ -207,7 +197,7 @@ def contact():
 
     try:
         send_contact_email(name, email, subject, message)
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc: 
         app.logger.error("Failed to send contact email: %s", exc)
         return jsonify(
             {"success": False, "errors": {"form": "Message could not be sent. Please email me directly."}}
