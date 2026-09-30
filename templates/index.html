@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>{{ data.name }} — {{ data.title }} Portfolio</title>
+<meta name="description" content="{{ data.name }} — AI Engineer specializing in LLMs, RAG, LangChain and Generative AI. {{ data.summary[:140] }}" />
+<meta name="keywords" content="AI Engineer, Machine Learning, LLM, RAG, LangChain, Generative AI, {{ data.name }}" />
+<meta name="author" content="{{ data.name }}" />
+<meta name="theme-color" content="#0A0A14" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="{{ data.name }} — AI Engineer" />
+<meta property="og:description" content="{{ data.summary[:160] }}" />
+<meta property="og:type" content="website" />
+
+<!-- Favicon -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%230A0A14%22/><circle cx=%2250%22 cy=%2250%22 r=%2222%22 fill=%22none%22 stroke=%22%237C5CFF%22 stroke-width=%226%22/><circle cx=%2250%22 cy=%2250%22 r=%226%22 fill=%22%2300D9FF%22/></svg>" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+<!-- AOS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body class="loading" data-theme="dark">
+
+<!-- ============================= LOADING SCREEN ============================= -->
+<div id="loader" aria-hidden="true">
+  <div class="loader-inner">
+    <svg class="loader-logo" viewBox="0 0 120 120" width="96" height="96">
+      <circle class="loader-ring" cx="60" cy="60" r="46" fill="none" stroke-width="2.5"/>
+      <circle class="loader-ring loader-ring--dashed" cx="60" cy="60" r="34" fill="none" stroke-width="1.5"/>
+      <circle class="loader-core" cx="60" cy="60" r="7"/>
+      <g class="loader-nodes">
+        <circle cx="60" cy="14" r="3.5"/>
+        <circle cx="106" cy="60" r="3.5"/>
+        <circle cx="60" cy="106" r="3.5"/>
+        <circle cx="14" cy="60" r="3.5"/>
+      </g>
+    </svg>
+    <div class="loader-text">R.S<span class="loader-dot">.</span>AI</div>
+    <div class="loader-bar"><div class="loader-bar-fill" id="loaderFill"></div></div>
+    <div class="loader-percent" id="loaderPercent">0%</div>
+  </div>
+</div>
+
+<!-- ============================= CURSOR / PROGRESS ============================= -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- ============================= NAVBAR ============================= -->
+<header class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a href="#home" class="nav-logo">R<span>.</span>Sharma</a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#home" class="nav-link active" data-section="home">Home</a>
+      <a href="#about" class="nav-link" data-section="about">About</a>
+      <a href="#skills" class="nav-link" data-section="skills">Skills</a>
+      <a href="#projects" class="nav-link" data-section="projects">Projects</a>
+      <a href="#experience" class="nav-link" data-section="experience">Experience</a>
+      <a href="#education" class="nav-link" data-section="education">Education</a>
+      <a href="#certifications" class="nav-link" data-section="certifications">Certifications</a>
+      <a href="#achievements" class="nav-link" data-section="achievements">Achievements</a>
+      <a href="#resume" class="nav-link" data-section="resume">Resume</a>
+      <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+    </nav>
+
+    <div class="navbar-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark and light mode">
+        <i class="fa-solid fa-sun icon-sun"></i>
+        <i class="fa-solid fa-moon icon-moon"></i>
+        <span class="theme-toggle-thumb"></span>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="name-strip" id="nameStrip">
+  <div class="container name-strip-inner">
+    <span class="name-strip-dot"></span>
+    <span class="name-strip-text">{{ data.name }}</span>
+    <span class="name-strip-dot"></span>
+  </div>
+</div>
+
+<main id="top">
+
+  <!-- ============================= HERO ============================= -->
+  <section id="home" class="hero">
+    <canvas id="heroCanvas" class="hero-canvas"></canvas>
+    <div class="hero-vignette"></div>
+
+    <div class="hero-content container">
+      <p class="hero-eyebrow" data-aos="fade-up">— Portfolio / {{ data.location }}</p>
+      <h1 class="hero-name" data-aos="fade-up" data-aos-delay="80">{{ data.name }}</h1>
+      <h2 class="hero-role">
+        I build <span id="typedRole" class="hero-role-typed"></span>
+      </h2>
+      <p class="hero-desc" data-aos="fade-up" data-aos-delay="160">
+        Turning Large Language Models, RAG pipelines and Generative AI into products people actually use.
+      </p>
+
+      <div class="hero-actions" data-aos="fade-up" data-aos-delay="240">
+        <a href="{{ url_for('static', filename='resume/' + data.resume_file) }}" download class="btn btn-primary magnetic">
+          <i class="fa-solid fa-download"></i> Download Resume
+        </a>
+        <a href="#projects" class="btn btn-ghost magnetic">
+          <i class="fa-solid fa-layer-group"></i> View Projects
+        </a>
+        <a href="#contact" class="btn btn-outline magnetic">
+          <i class="fa-solid fa-paper-plane"></i> Contact Me
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-scroll-cue" aria-hidden="true">
+      <span></span> Scroll
+    </div>
+  </section>
+
+  <!-- ============================= ABOUT ============================= -->
+  <section id="about" class="section about">
+    <div class="container">
+      <p class="section-eyebrow" data-aos="fade-up">01 — About</p>
+      <h2 class="section-title" data-aos="fade-up">Who I Am</h2>
+
+      <div class="about-grid">
+        <div class="about-visual" data-aos="fade-right">
+          <div class="about-photo-frame tilt-card">
+            <spline-viewer
+              class="about-spline"
+              url="https://prod.spline.design/PgcLAm3dpn-j12hY/scene.splinecode"
+              loading-anim-type="spinner-small-dark">
+            </spline-viewer>
+            <div class="about-photo-glow"></div>
+          </div>
+        </div>
+
+        <div class="about-copy" data-aos="fade-left">
+          <p class="about-summary">{{ data.summary }}</p>
+
+          <div class="about-counters">
+            <div class="counter-card">
+              <span class="counter-num" data-count="3">0</span>
+              <span class="counter-label">AI Projects Shipped</span>
+            </div>
+            <div class="counter-card">
+              <span class="counter-num" data-count="{{ skills|length }}">0</span>
+              <span class="counter-label">Skills &amp; Technologies</span>
+            </div>
+            <div class="counter-card">
+              <span class="counter-num" data-count="5">0</span>
+              <span class="counter-label">Certifications</span>
+            </div>
+            <div class="counter-card">
+              <span class="counter-num" data-count="4">0</span>
+              <span class="counter-label">AI APIs Integrated</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= SKILLS UNIVERSE ============================= -->
+  <section id="skills" class="section skills-universe">
+    <div class="container skills-container">
+      <p class="section-eyebrow" data-aos="fade-up">02 — Skills</p>
+      <h2 class="section-title" data-aos="fade-up">The Skills Universe</h2>
+      <p class="section-sub" data-aos="fade-up">
+        Drag to rotate · Scroll to zoom · Hover a node · Double-click to focus
+      </p>
+
+      <div class="view-toggle" role="tablist" aria-label="Skills view" data-aos="fade-up">
+        <button class="view-toggle-btn active" data-view="3d" role="tab" aria-selected="true">
+          <i class="fa-solid fa-cube"></i> 3D Universe
+        </button>
+        <button class="view-toggle-btn" data-view="2d" role="tab" aria-selected="false">
+          <i class="fa-solid fa-table-cells"></i> 2D Grid
+        </button>
+      </div>
+    </div>
+
+    <div class="universe-stage" id="universeStage">
+      <canvas id="skillsCanvas"></canvas>
+      <div class="universe-tooltip" id="skillTooltip"></div>
+    </div>
+
+    <div class="skills-grid is-hidden container" id="skillsGrid" aria-label="Skills grid"></div>
+
+    <div class="universe-popup" id="skillPopup" aria-hidden="true">
+      <div class="universe-popup-card">
+        <button class="universe-popup-close" id="skillPopupClose" aria-label="Close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <p class="popup-category" id="popupCategory"></p>
+        <h3 class="popup-title" id="popupTitle"></h3>
+        <div class="popup-level">
+          <span>Proficiency</span>
+          <div class="popup-level-bar"><div class="popup-level-fill" id="popupLevelFill"></div></div>
+        </div>
+        <p class="popup-desc" id="popupDesc"></p>
+        <div class="popup-block">
+          <h4>Used In</h4>
+          <p id="popupProjects"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="skills-legend container" data-aos="fade-up">
+      <span class="legend-item"><i class="dot dot-lang"></i> Languages</span>
+      <span class="legend-item"><i class="dot dot-ai"></i> AI / ML</span>
+      <span class="legend-item"><i class="dot dot-web"></i> Web</span>
+      <span class="legend-item"><i class="dot dot-tools"></i> Tools &amp; Data</span>
+    </div>
+  </section>
+
+  <!-- ============================= PROJECTS ============================= -->
+  <section id="projects" class="section projects">
+    <div class="container">
+      <p class="section-eyebrow" data-aos="fade-up">03 — Projects</p>
+      <h2 class="section-title" data-aos="fade-up">Selected Work</h2>
+
+      <div class="project-grid">
+
+        <article class="project-card tilt-card" data-aos="fade-up">
+          <div class="project-card-glow"></div>
+          <div class="project-image">
+            <i class="fa-solid fa-file-lines"></i>
+          </div>
+          <div class="project-body">
+            <h3>AI-Powered PDF Chatbot</h3>
+            <p class="project-desc">
+              RAG-based chatbot that ingests multiple PDFs and answers questions directly from
+              their content, with table extraction, image understanding and full conversation history.
+            </p>
+            <ul class="project-features">
+              <li>Multi-document semantic retrieval &amp; chunking</li>
+              <li>Contextual reasoning via Google Gemini API</li>
+              <li>Dark / light mode chat interface</li>
+            </ul>
+            <div class="project-tags">
+              <span>Python</span><span>RAG</span><span>LangChain</span><span>Gemini API</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/REYANSH31" target="_blank" rel="noopener" class="btn btn-sm btn-outline">
+                <i class="fa-brands fa-github"></i> GitHub
+              </a>
+              <a href="#contact" class="btn btn-sm btn-ghost">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card tilt-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="project-card-glow"></div>
+          <div class="project-image">
+            <i class="fa-solid fa-microphone-lines"></i>
+          </div>
+          <div class="project-body">
+            <h3>JARVIS AI Voice Assistant</h3>
+            <p class="project-desc">
+              Desktop voice assistant that understands natural speech and controls your machine —
+              search, automate and converse, hands-free.
+            </p>
+            <ul class="project-features">
+              <li>Speech recognition &amp; text-to-speech pipeline</li>
+              <li>Browser and desktop application automation</li>
+              <li>Groq-powered natural language responses</li>
+            </ul>
+            <div class="project-tags">
+              <span>Python</span><span>Groq API</span><span>Automation</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/REYANSH31" target="_blank" rel="noopener" class="btn btn-sm btn-outline">
+                <i class="fa-brands fa-github"></i> GitHub
+              </a>
+              <a href="#contact" class="btn btn-sm btn-ghost">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card tilt-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="project-card-glow"></div>
+          <div class="project-image">
+            <i class="fa-solid fa-comments"></i>
+          </div>
+          <div class="project-body">
+            <h3>Auto Reply AI Chatbot</h3>
+            <p class="project-desc">
+              Context-aware chatbot that drafts intelligent replies in real time, tuned through
+              careful prompt engineering and conversation memory.
+            </p>
+            <ul class="project-features">
+              <li>Real-time AI-generated responses</li>
+              <li>Prompt engineering for tone &amp; accuracy</li>
+              <li>Responsive chat interface</li>
+            </ul>
+            <div class="project-tags">
+              <span>Python</span><span>Gemini API</span><span>Prompt Engineering</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/REYANSH31" target="_blank" rel="noopener" class="btn btn-sm btn-outline">
+                <i class="fa-brands fa-github"></i> GitHub
+              </a>
+              <a href="#contact" class="btn btn-sm btn-ghost">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="mini-projects" data-aos="fade-up">
+        <h3 class="mini-projects-title">Mini Projects</h3>
+        <div class="mini-project-grid">
+
+          <div class="mini-project-card tilt-card">
+            <i class="fa-solid fa-wallet mini-project-icon"></i>
+            <h4>Expense Tracker</h4>
+            <p>A lightweight app to log daily expenses, categorize spending, and visualize totals to build better money habits.</p>
+            <div class="project-tags">
+              <span>Python</span><span>Flask</span><span>SQL</span>
+            </div>
+          </div>
+
+          <div class="mini-project-card tilt-card">
+            <i class="fa-solid fa-qrcode mini-project-icon"></i>
+            <h4>QR Code Generator</h4>
+            <p>A simple utility that converts any text or URL into a downloadable QR code, with instant client-side preview.</p>
+            <div class="project-tags">
+              <span>Python</span><span>JavaScript</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= EXPERIENCE ============================= -->
+  <section id="experience" class="section experience">
+    <div class="container">
+      <p class="section-eyebrow" data-aos="fade-up">04 — Experience</p>
+      <h2 class="section-title" data-aos="fade-up">Building in Public</h2>
+
+      <div class="timeline">
+        <div class="timeline-line"></div>
+
+        <div class="timeline-item" data-aos="fade-up">
+          <div class="timeline-dot"><i class="fa-solid fa-robot"></i></div>
+          <div class="timeline-card tilt-card">
+            <span class="timeline-date">2026 — Present</span>
+            <h3>Independent AI Projects</h3>
+            <p class="timeline-company">Self-directed · Delhi, India</p>
+            <p>
+              Designed and shipped three end-to-end AI applications spanning document intelligence,
+              voice automation, and conversational AI — integrating LLM APIs into production-style
+              workflows from data ingestion to user-facing interface.
+            </p>
+            <div class="project-tags">
+              <span>LLMs</span><span>RAG</span><span>LangChain</span><span>Prompt Engineering</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-aos="fade-up">
+          <div class="timeline-dot"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div class="timeline-card tilt-card">
+            <span class="timeline-date">2022 — 2026</span>
+            <h3>B.Tech in AI &amp; Machine Learning</h3>
+            <p class="timeline-company">St. Andrews Institute of Technology and Management</p>
+            <p>
+              Specializing in Artificial Intelligence and Machine Learning — building a foundation
+              in algorithms, deep learning, and applied NLP alongside independent project work.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= EDUCATION ============================= -->
+  <section id="education" class="section education">
+    <div class="container">
+      <p class="section-eyebrow" data-aos="fade-up">05 — Education</p>
+      <h2 class="section-title" data-aos="fade-up">Academic Background</h2>
+
+      <div class="edu-card tilt-card" data-aos="fade-up">
+        <div class="edu-icon"><i class="fa-solid fa-building-columns"></i></div>
+        <div class="edu-body">
+          <h3>Bachelor of Technology — Computer Science Engineering</h3>
+          <p class="edu-spec">Specialization: Artificial Intelligence and Machine Learning</p>
+          <p class="edu-school">St. Andrews Institute of Technology and Management, Gurgaon, India</p>
+          <div class="edu-meta">
+            <span><i class="fa-solid fa-calendar"></i> Graduation: 2026</span>
+            <span><i class="fa-solid fa-star"></i> Percentage: 75%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= CERTIFICATIONS ============================= -->
+  <section id="certifications" class="section certifications">
+    <div class="container">
+      <p class="section-eyebrow" data-aos="fade-up">06 — Certifications</p>
+      <h2 class="section-title" data-aos="fade-up">Credentials</h2>
+
+      <div class="cert-grid">
+        <div class="cert-card tilt-card" data-aos="fade-up">
+          <i class="fa-brands fa-ibm cert-icon"></i>
+          <h3>IBM Web Development</h3>
+          <p>Issued by IBM</p>
+        </div>
+        <div class="cert-card tilt-card" data-aos="fade-up" data-aos-delay="100">
+          <i class="fa-solid fa-infinity cert-icon"></i>
+          <h3>IBM DevOps</h3>
+          <p>Issued by IBM</p>
+        </div>
+        <div class="cert-card tilt-card" data-aos="fade-up" data-aos-delay="200">
+          <i class="fa-brands fa-aws cert-icon"></i>
+          <h3>AWS Prompt Engineering</h3>
+          <p>Issued by Amazon Web Services</p>
+        </div>
+        <div class="cert-card tilt-card" data-aos="fade-up" data-aos-delay="300">
+          <i class="fa-solid fa-brain cert-icon"></i>
+          <h3>AI Fundamentals</h3>
+          <p>Core concepts in artificial intelligence</p>
+        </div>
+        <div class="cert-card tilt-card" data-aos="fade-up" data-aos-delay="400">
+          <i class="fa-solid fa-wand-magic-sparkles cert-icon"></i>
+          <h3>Generative AI</h3>
+          <p>Foundations of generative AI systems</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= ACHIEVEMENTS ============================= -->
+  <section id="achievements" class="section achievements">
+    <div class="container">
+      <p class="section-eyebrow" data-aos="fade-up">07 — Achievements</p>
+      <h2 class="section-title" data-aos="fade-up">Milestones</h2>
+
+      <div class="achieve-grid">
+        <div class="achieve-card tilt-card" data-aos="fade-up">
+          <i class="fa-solid fa-layer-group achieve-icon"></i>
+          <h3>Three End-to-End AI Applications</h3>
+          <p>Built and shipped three complete AI applications powered by LLMs, RAG, prompt engineering and AI APIs.</p>
+        </div>
+        <div class="achieve-card tilt-card" data-aos="fade-up" data-aos-delay="100">
+          <i class="fa-solid fa-brain achieve-icon"></i>
+          <h3>Intelligent Systems Across Domains</h3>
+          <p>Delivered document analysis, conversational AI and voice automation systems from concept to interface.</p>
+        </div>
+        <div class="achieve-card tilt-card" data-aos="fade-up" data-aos-delay="200">
+          <i class="fa-solid fa-plug achieve-icon"></i>
+          <h3>Production-Ready API Integrations</h3>
+          <p>Hands-on experience integrating Google Gemini API and Groq API into real, working applications.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= RESUME ============================= -->
+  <section id="resume" class="section resume">
+    <div class="container">
+      <p class="section-eyebrow" data-aos="fade-up">08 — Resume</p>
+      <h2 class="section-title" data-aos="fade-up">Get the Full Picture</h2>
+
+      <div class="resume-card tilt-card" data-aos="zoom-in">
+        <div class="resume-card-left">
+          <i class="fa-solid fa-file-pdf resume-pdf-icon"></i>
+          <div>
+            <h3>{{ data.name }} — Resume</h3>
+            <p>PDF · Updated 2026</p>
+          </div>
+        </div>
+        <a href="{{ url_for('static', filename='resume/' + data.resume_file) }}" download class="btn btn-primary magnetic">
+          <i class="fa-solid fa-download"></i> Download Resume
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= CONTACT ============================= -->
+  <section id="contact" class="section contact">
+    <div class="container">
+      <p class="section-eyebrow" data-aos="fade-up">09 — Contact</p>
+      <h2 class="section-title" data-aos="fade-up">Let's Connect </h2>
+      <p class="section-sub" data-aos="fade-up">Have a role? My inbox is open.</p>
+
+      <div class="contact-grid">
+        <div class="contact-info" data-aos="fade-right">
+          <a href="mailto:{{ data.email }}" class="contact-info-row">
+            <i class="fa-solid fa-envelope"></i>
+            <span>{{ data.email }}</span>
+          </a>
+          <div class="contact-info-row">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>{{ data.location }}</span>
+          </div>
+
+          <div class="social-links">
+            <a href="{{ data.github }}" target="_blank" rel="noopener" class="social-icon" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="{{ data.linkedin }}" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:{{ data.email }}" class="social-icon" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+          </div>
+        </div>
+
+        <form id="contactForm" class="contact-form" data-aos="fade-left" novalidate>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="cf-name">Name</label>
+              <input type="text" id="cf-name" name="name" placeholder="Your name" required />
+              <span class="form-error" data-error-for="name"></span>
+            </div>
+            <div class="form-field">
+              <label for="cf-email">Email</label>
+              <input type="email" id="cf-email" name="email" placeholder="you@example.com" required />
+              <span class="form-error" data-error-for="email"></span>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="cf-subject">Subject</label>
+            <input type="text" id="cf-subject" name="subject" placeholder="What's this about?" />
+          </div>
+          <div class="form-field">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" rows="5" placeholder="Tell me about the opportunity or idea..." required></textarea>
+            <span class="form-error" data-error-for="message"></span>
+          </div>
+
+          <!-- honeypot -->
+          <input type="text" name="website" id="cf-website" class="honeypot" tabindex="-1" autocomplete="off" />
+
+          <button type="submit" class="btn btn-primary btn-block magnetic" id="contactSubmit">
+            <span class="btn-label"><i class="fa-solid fa-paper-plane"></i> Send Message</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================= FOOTER ============================= -->
+<footer class="footer">
+  <div class="footer-bg" aria-hidden="true"></div>
+  <div class="container footer-inner">
+    <p>&copy; <span id="year"></span> {{ data.name }}. All rights reserved.</p>
+    <p class="footer-built">
+      Built with
+      <span><i class="fa-brands fa-python"></i> Python</span>
+      <span><i class="fa-solid fa-flask"></i> Flask</span>
+      <span><i class="fa-brands fa-html5"></i> HTML</span>
+      <span><i class="fa-brands fa-css3-alt"></i> CSS</span>
+      <span><i class="fa-brands fa-js"></i> JavaScript</span>
+      <span><i class="fa-solid fa-cube"></i> Three.js</span>
+    </p>
+  </div>
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+</footer>
+
+<!-- ============================= SCRIPTS ============================= -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.1.0/typed.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js"></script>
+
+<script>
+  window.SITE_DATA = JSON.parse('{{ data | tojson | safe }}');
+  window.SKILLS_DATA = JSON.parse('{{ skills | tojson | safe }}');
+</script>
+
+<script src="{{ url_for('static', filename='js/threeScene.js') }}"></script>
+<script src="{{ url_for('static', filename='js/skillsUniverse.js') }}"></script>
+<script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+<script src="{{ url_for('static', filename='js/contact.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
